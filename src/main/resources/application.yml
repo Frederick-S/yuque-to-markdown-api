@@ -1,6 +1,6 @@
 yuque:
-  clientId: IvXExV0Mh9dopZHcO8kY
-  clientSecret: mKMVIpJCc8LqoX86XhlmhiQ4kXc28Bk2OQRYTOrl
+  clientId: your client id
+  clientSecret: your client secret
   authorizationGrantType: authorization_code
   redirectUri: http://localhost:8080/oauth2/authorized
   scope: repo:read,doc:read
