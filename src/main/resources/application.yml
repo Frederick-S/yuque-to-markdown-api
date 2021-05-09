@@ -1,9 +1,8 @@
 yuque:
-  clientId: your client id
-  clientSecret: your client secret
+  clientId: ${YUQUE_CLIENT_ID}
+  clientSecret: ${YUQUE_CLIENT_SECRET}
   authorizationGrantType: authorization_code
-  redirectUri: http://localhost:8080/oauth2/authorized
+  redirectUri: ${YUQUE_REDIRECT_URI}
   scope: repo:read,doc:read
   authorizationUri: https://www.yuque.com/oauth2/authorize
   tokenUri: https://www.yuque.com/oauth2/token
-  userInfoUri: https://www.yuque.com/api/v2/user

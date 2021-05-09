@@ -21,6 +21,4 @@ class YuqueConfig {
     var authorizationUri = ""
 
     var tokenUri = ""
-
-    var userInfoUri = ""
 }
