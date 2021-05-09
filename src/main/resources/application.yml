@@ -1,0 +1,19 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          yuque:
+            provider: yuque
+            clientId: IvXExV0Mh9dopZHcO8kY
+            clientSecret: mKMVIpJCc8LqoX86XhlmhiQ4kXc28Bk2OQRYTOrl
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: http://localhost:8080/login/oauth2/code/yuque
+            scope: repo:read,doc:read
+            clientName: yuque
+        provider:
+          yuque:
+            authorizationUri: https://www.yuque.com/oauth2/authorize
+            tokenUri: https://www.yuque.com/oauth2/token
+            userInfoUri: https://www.yuque.com/api/v2/user
