@@ -9,19 +9,23 @@ class User {
 
     var type = ""
 
-    @get:JsonProperty("login")
+    @get:JsonProperty("loginName")
+    @set:JsonProperty("login")
     var loginName = ""
 
     var name = ""
 
     var description: String? = null
 
-    @get:JsonProperty("avatar_url")
+    @get:JsonProperty("avatarUrl")
+    @set:JsonProperty("avatar_url")
     var avatarUrl = ""
 
-    @get:JsonProperty("created_at")
+    @get:JsonProperty("createdAt")
+    @set:JsonProperty("created_at")
     var createdAt = ""
 
-    @get:JsonProperty("updated_at")
+    @get:JsonProperty("updatedAt")
+    @set:JsonProperty("updated_at")
     var updatedAt = ""
 }

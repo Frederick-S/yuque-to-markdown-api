@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class YuqueTokenResponse {
-    @get:JsonProperty("access_token")
+    @set:JsonProperty("access_token")
     var accessToken = ""
 
-    @get:JsonProperty("token_type")
+    @set:JsonProperty("token_type")
     var tokenType = ""
 
     var scope = ""
