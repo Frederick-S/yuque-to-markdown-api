@@ -19,7 +19,7 @@ class AuthController {
     @Autowired
     lateinit var yuqueConfig: YuqueConfig
 
-    @GetMapping("authorize")
+    @GetMapping("/authorize")
     fun authorize(): String {
         val url =
             "${yuqueConfig.authorizationUri}?client_id=${yuqueConfig.clientId}&scope=${yuqueConfig.scope}&redirect_uri=${yuqueConfig.redirectUri}&response_type=code"
@@ -27,7 +27,7 @@ class AuthController {
         return "redirect:${url}"
     }
 
-    @GetMapping("authorized")
+    @GetMapping("/authorized")
     fun authorized(@RequestParam code: String, @RequestParam state: String, httpSession: HttpSession): String {
         val requestBody = FormBody.Builder()
             .add("client_id", yuqueConfig.clientId)
