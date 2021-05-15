@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class User {
-    var id = 0
+    var id: Long = 0
 
     var type = ""
 

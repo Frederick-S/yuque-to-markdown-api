@@ -1,4 +1,4 @@
-package yuque2mk.controller
+package yuque2mk.controller.api
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
