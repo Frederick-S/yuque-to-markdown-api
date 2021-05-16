@@ -66,7 +66,7 @@ class YuqueService {
     }
 
     fun getDocDetail(repoId: Long, docSlug: String, accessToken: String): DocDetail {
-        val url = "${baseUrl}/repos/${repoId}/docs/${docSlug}"
+        val url = "${baseUrl}/repos/${repoId}/docs/${docSlug}?raw=1"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
