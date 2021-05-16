@@ -24,7 +24,7 @@ class AuthController {
         val url =
             "${yuqueConfig.authorizationUri}?client_id=${yuqueConfig.clientId}&scope=${yuqueConfig.scope}&redirect_uri=${yuqueConfig.redirectUri}&response_type=code"
 
-        return "redirect:${url}"
+        return "redirect:$url"
     }
 
     @GetMapping("/authorized")

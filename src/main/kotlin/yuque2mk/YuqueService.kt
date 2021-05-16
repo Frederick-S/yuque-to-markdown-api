@@ -15,7 +15,7 @@ class YuqueService {
     val baseUrl = "https://www.yuque.com/api/v2"
 
     fun getMe(accessToken: String): User {
-        val url = "${baseUrl}/user"
+        val url = "$baseUrl/user"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
@@ -32,7 +32,7 @@ class YuqueService {
     }
 
     fun getRepos(userId: Long, accessToken: String): List<Repo> {
-        val url = "${baseUrl}/users/${userId}/repos"
+        val url = "$baseUrl/users/$userId/repos"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
@@ -49,7 +49,7 @@ class YuqueService {
     }
 
     fun getDocs(repoId: Long, accessToken: String): List<Doc> {
-        val url = "${baseUrl}/repos/${repoId}/docs"
+        val url = "$baseUrl/repos/$repoId/docs"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
@@ -66,7 +66,7 @@ class YuqueService {
     }
 
     fun getDocDetail(repoId: Long, docSlug: String, accessToken: String): DocDetail {
-        val url = "${baseUrl}/repos/${repoId}/docs/${docSlug}?raw=1"
+        val url = "$baseUrl/repos/$repoId/docs/$docSlug?raw=1"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
