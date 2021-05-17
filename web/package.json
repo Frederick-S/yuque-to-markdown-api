@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "copy-dist": "rimraf ../src/main/resources/static/**/* && copyfiles --up 1 ./dist/**/* ../src/main/resources/static"
+    "copy-dist": "rimraf ../src/main/resources/static/**/* && copyfiles --up 1 './dist/**/*' ../src/main/resources/static"
   },
   "dependencies": {
     "buefy": "^0.9.7",
