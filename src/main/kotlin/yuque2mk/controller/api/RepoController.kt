@@ -9,7 +9,7 @@ import yuque2mk.dto.Repo
 import javax.servlet.http.HttpSession
 
 @RestController
-class RepoController {
+class RepoController : BaseApiController() {
     @Autowired
     lateinit var yuqueService: YuqueService
 

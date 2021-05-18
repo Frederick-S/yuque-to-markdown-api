@@ -65,8 +65,8 @@ class YuqueService {
         return objectMapper.convertValue(jsonNode.get("data"), object : TypeReference<List<Doc>>() {})
     }
 
-    fun getDocDetail(repoId: Long, docSlug: String, accessToken: String): DocDetail {
-        val url = "$baseUrl/repos/$repoId/docs/$docSlug?raw=1"
+    fun getDocDetail(repoId: Long, docId: String, accessToken: String): DocDetail {
+        val url = "$baseUrl/repos/$repoId/docs/$docId?raw=1"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")

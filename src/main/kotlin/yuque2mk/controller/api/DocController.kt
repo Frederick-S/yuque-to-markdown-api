@@ -10,7 +10,7 @@ import yuque2mk.dto.DocDetail
 import javax.servlet.http.HttpSession
 
 @RestController
-class DocController {
+class DocController : BaseApiController() {
     @Autowired
     lateinit var yuqueService: YuqueService
 
@@ -19,8 +19,8 @@ class DocController {
         return yuqueService.getDocs(repoId, httpSession.getAttribute("accessToken").toString())
     }
 
-    @GetMapping("/repos/{repoId}/docs/{docSlug}")
-    fun getDocDetail(@PathVariable repoId: Long, @PathVariable docSlug: String, httpSession: HttpSession): DocDetail {
-        return yuqueService.getDocDetail(repoId, docSlug, httpSession.getAttribute("accessToken").toString())
+    @GetMapping("/repos/{repoId}/docs/{docId}")
+    fun getDocDetail(@PathVariable repoId: Long, @PathVariable docId: String, httpSession: HttpSession): DocDetail {
+        return yuqueService.getDocDetail(repoId, docId, httpSession.getAttribute("accessToken").toString())
     }
 }

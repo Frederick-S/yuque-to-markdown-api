@@ -8,7 +8,7 @@ import yuque2mk.dto.User
 import javax.servlet.http.HttpSession
 
 @RestController
-class UserController {
+class UserController : BaseApiController() {
     @Autowired
     lateinit var yuqueService: YuqueService
 
