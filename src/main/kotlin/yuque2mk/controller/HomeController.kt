@@ -1,13 +1,13 @@
 package yuque2mk.controller
 
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession
 
-@RestController
+@Controller
 class HomeController {
     @GetMapping("/")
     fun home(httpSession: HttpSession): String {
-        return ""
+        return "index.html"
     }
 }
