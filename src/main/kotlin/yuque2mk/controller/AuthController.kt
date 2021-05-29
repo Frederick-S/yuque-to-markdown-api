@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession
 @RequestMapping("oauth2")
 class AuthController {
     @Autowired
-    lateinit var yuqueConfig: YuqueConfig
+    private lateinit var yuqueConfig: YuqueConfig
 
     @GetMapping("/authorize")
     fun authorize(): String {

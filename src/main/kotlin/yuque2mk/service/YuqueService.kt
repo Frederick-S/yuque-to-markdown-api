@@ -1,4 +1,4 @@
-package yuque2mk
+package yuque2mk.service
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -11,9 +11,7 @@ import yuque2mk.dto.Repo
 import yuque2mk.dto.User
 
 @Service
-class YuqueService {
-    val baseUrl = "https://www.yuque.com/api/v2"
-
+class YuqueService : AbstractYuqueService() {
     fun getMe(accessToken: String): User {
         val url = "$baseUrl/user"
         val request = Request.Builder()

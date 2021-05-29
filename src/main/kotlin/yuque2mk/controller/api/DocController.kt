@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
-import yuque2mk.YuqueService
+import yuque2mk.service.YuqueService
 import yuque2mk.dto.Doc
 import yuque2mk.dto.DocDetail
 import javax.servlet.http.HttpSession
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession
 @RestController
 class DocController : BaseApiController() {
     @Autowired
-    lateinit var yuqueService: YuqueService
+    private lateinit var yuqueService: YuqueService
 
     @GetMapping("/repos/{repoId}/docs")
     fun getDocs(@PathVariable repoId: Long, httpSession: HttpSession): List<Doc> {
