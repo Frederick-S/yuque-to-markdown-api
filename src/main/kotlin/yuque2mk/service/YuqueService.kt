@@ -16,9 +16,7 @@ class YuqueService : AbstractYuqueService() {
         val url = "$baseUrl/user"
         val request = Request.Builder()
             .url(url)
-            .header("User-Agent", "yuque-2-markdown")
-            .header("Content-Type", "application/json")
-            .header("X-Auth-Token", accessToken)
+            .headers(getCommonHeaders(accessToken))
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
@@ -33,9 +31,7 @@ class YuqueService : AbstractYuqueService() {
         val url = "$baseUrl/users/$userId/repos"
         val request = Request.Builder()
             .url(url)
-            .header("User-Agent", "yuque-2-markdown")
-            .header("Content-Type", "application/json")
-            .header("X-Auth-Token", accessToken)
+            .headers(getCommonHeaders(accessToken))
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
@@ -53,9 +49,7 @@ class YuqueService : AbstractYuqueService() {
         val url = "$baseUrl/repos/$repoId/docs?offset=$offset&limit=$limit"
         val request = Request.Builder()
             .url(url)
-            .header("User-Agent", "yuque-2-markdown")
-            .header("Content-Type", "application/json")
-            .header("X-Auth-Token", accessToken)
+            .headers(getCommonHeaders(accessToken))
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
@@ -70,9 +64,7 @@ class YuqueService : AbstractYuqueService() {
         val url = "$baseUrl/repos/$repoId/docs/$docId?raw=1"
         val request = Request.Builder()
             .url(url)
-            .header("User-Agent", "yuque-2-markdown")
-            .header("Content-Type", "application/json")
-            .header("X-Auth-Token", accessToken)
+            .headers(getCommonHeaders(accessToken))
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
