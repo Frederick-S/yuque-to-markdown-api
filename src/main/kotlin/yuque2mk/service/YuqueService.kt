@@ -46,8 +46,11 @@ class YuqueService : AbstractYuqueService() {
         return objectMapper.convertValue(jsonNode.get("data"), object : TypeReference<List<Repo>>() {})
     }
 
-    fun getDocs(repoId: Long, accessToken: String): List<Doc> {
-        val url = "$baseUrl/repos/$repoId/docs"
+    /**
+     * offset starts from 0
+     */
+    fun getDocs(repoId: Long, offset: Int?, limit: Int?, accessToken: String): List<Doc> {
+        val url = "$baseUrl/repos/$repoId/docs?offset=$offset&limit=$limit"
         val request = Request.Builder()
             .url(url)
             .header("User-Agent", "yuque-2-markdown")
