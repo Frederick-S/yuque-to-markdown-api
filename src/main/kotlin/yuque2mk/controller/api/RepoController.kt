@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import yuque2mk.annotation.AccessToken
 import yuque2mk.annotation.LoginRequired
-import yuque2mk.service.YuqueService
 import yuque2mk.dto.Repo
+import yuque2mk.service.YuqueService
 
 @RestController
 class RepoController : BaseApiController() {

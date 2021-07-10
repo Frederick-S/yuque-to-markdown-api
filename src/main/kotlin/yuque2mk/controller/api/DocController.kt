@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import yuque2mk.annotation.AccessToken
 import yuque2mk.annotation.LoginRequired
-import yuque2mk.service.YuqueService
 import yuque2mk.dto.Doc
 import yuque2mk.dto.DocDetail
+import yuque2mk.service.YuqueService
 
 @RestController
 class DocController : BaseApiController() {

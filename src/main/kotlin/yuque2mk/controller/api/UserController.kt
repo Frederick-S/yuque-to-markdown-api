@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import yuque2mk.annotation.AccessToken
 import yuque2mk.annotation.LoginRequired
-import yuque2mk.service.YuqueService
 import yuque2mk.dto.User
+import yuque2mk.service.YuqueService
 
 @RestController
 class UserController : BaseApiController() {
