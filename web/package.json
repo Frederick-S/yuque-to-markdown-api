@@ -9,7 +9,8 @@
     "copy-dist": "rimraf ../src/main/resources/static/**/* && copyfiles --up 1 './dist/**/*' ../src/main/resources/static"
   },
   "dependencies": {
-    "buefy": "^0.9.7",
+    "axios": "^0.21.1",
+    "buefy": "^0.9.8",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
