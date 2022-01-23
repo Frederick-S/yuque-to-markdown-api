@@ -6,10 +6,16 @@ axios.interceptors.response.use((response) => {
     if (response.status === 200) {
         return response
     } else {
-        return Promise.reject('Server error')
+        return Promise.reject({
+            status: response.status,
+            error: response.data.error
+        })
     }
 }, (error) => {
-    return Promise.reject(error.message)
+    return Promise.reject({
+        status: 500,
+        error: 'Internal Server Error'
+    })
 })
 
 export default axios
