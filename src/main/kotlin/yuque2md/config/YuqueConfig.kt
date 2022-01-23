@@ -1,4 +1,4 @@
-package yuque2md
+package yuque2md.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -15,6 +15,8 @@ class YuqueConfig {
     var authorizationGrantType = ""
 
     var redirectUri = ""
+
+    var clientRedirectUri = ""
 
     var scope = ""
 

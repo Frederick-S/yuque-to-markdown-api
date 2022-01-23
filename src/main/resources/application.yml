@@ -3,6 +3,10 @@ yuque:
   clientSecret: ${YUQUE_CLIENT_SECRET}
   authorizationGrantType: authorization_code
   redirectUri: ${YUQUE_REDIRECT_URI}
+  clientRedirectUri: ${YUQUE_CLIENT_REDIRECT_URI}
   scope: repo:read,doc:read
   authorizationUri: https://www.yuque.com/oauth2/authorize
   tokenUri: https://www.yuque.com/oauth2/token
+redis:
+  host: localhost
+  port: 6379

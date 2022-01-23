@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
-import yuque2md.YuqueConfig
+import yuque2md.config.YuqueConfig
 import yuque2md.dto.YuqueTokenResponse
+import yuque2md.service.CacheService
+import java.util.*
 import javax.servlet.http.HttpSession
 
 @Controller
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpSession
 class AuthController {
     @Autowired
     private lateinit var yuqueConfig: YuqueConfig
+
+    @Autowired
+    private lateinit var cacheService: CacheService
 
     @GetMapping("/authorize")
     fun authorize(): String {
@@ -44,9 +49,10 @@ class AuthController {
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val token = objectMapper.readValue(json, YuqueTokenResponse::class.java)
+        val uuid = UUID.randomUUID().toString()
 
-        httpSession.setAttribute("accessToken", token.accessToken)
+        cacheService.set(uuid, token.accessToken)
 
-        return "redirect:/"
+        return "redirect:http://localhost:8000?tokenId=${uuid}"
     }
 }
