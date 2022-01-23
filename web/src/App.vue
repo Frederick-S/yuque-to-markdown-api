@@ -12,8 +12,8 @@ export default {
   name: 'App',
   created() {
     axios.get('/api/me')
-      .then(data => {
-        console.log(data)
+      .then(() => {
+        this.$router.push('/repos')
       })
       .catch(error => {
         if (error.status === 401) {

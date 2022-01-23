@@ -1,8 +1,6 @@
 <template>
-  <h1>Login</h1>
+  <h1>repos</h1>
 </template>
 
 <script>
-export default {
-}
 </script>
