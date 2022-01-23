@@ -53,6 +53,6 @@ class AuthController {
 
         cacheService.set(uuid, token.accessToken)
 
-        return "redirect:http://localhost:8000?tokenId=${uuid}"
+        return "redirect:http://localhost:8000/?tokenId=${uuid}"
     }
 }
