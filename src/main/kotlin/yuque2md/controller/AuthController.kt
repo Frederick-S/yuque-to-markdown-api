@@ -51,7 +51,7 @@ class AuthController {
         val token = objectMapper.readValue(json, YuqueTokenResponse::class.java)
         val uuid = UUID.randomUUID().toString()
 
-        cacheService.set(uuid, token.accessToken)
+        cacheService.set(uuid, token.accessToken, 60 * 60 * 24)
 
         return "redirect:http://localhost:8000/?tokenId=${uuid}"
     }
