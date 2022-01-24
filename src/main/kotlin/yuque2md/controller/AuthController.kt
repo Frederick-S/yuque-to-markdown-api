@@ -53,6 +53,6 @@ class AuthController {
 
         cacheService.set(uuid, token.accessToken, 60 * 60 * 24)
 
-        return "redirect:http://localhost:8000/?tokenId=${uuid}"
+        return "redirect:${yuqueConfig.clientRedirectUri}/?tokenId=${uuid}"
     }
 }
