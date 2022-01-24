@@ -24,4 +24,10 @@ class CacheService @Autowired constructor(@Autowired redisConfig: RedisConfig) {
             it.set(key, value, setParams)
         }
     }
+    
+    fun delete(key: String) {
+        pool.resource.use {
+            it.del(key)
+        }
+    }
 }
