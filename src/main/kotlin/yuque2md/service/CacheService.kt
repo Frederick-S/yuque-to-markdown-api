@@ -10,13 +10,13 @@ import yuque2md.config.RedisConfig
 class CacheService @Autowired constructor(@Autowired redisConfig: RedisConfig) {
     private var pool = JedisPool(redisConfig.host, redisConfig.port)
 
-    fun get(key: String): String {
+    fun get(key: String): String? {
         pool.resource.use {
             return it.get(key)
         }
     }
 
-    fun set(key: String, value: String, secondsToExpire: Long) {
+    fun set(key: String, value: String?, secondsToExpire: Long) {
         val setParams = SetParams()
         setParams.ex(secondsToExpire)
 
