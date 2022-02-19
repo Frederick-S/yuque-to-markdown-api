@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession
 @Controller
 @RequestMapping("oauth2")
 class AuthController {
+    val oneDayInSeconds = 60 * 60 * 24L
+
     @Autowired
     private lateinit var yuqueConfig: YuqueConfig
 
@@ -51,7 +53,7 @@ class AuthController {
         val token = objectMapper.readValue(json, YuqueTokenResponse::class.java)
         val uuid = UUID.randomUUID().toString()
 
-        cacheService.set(uuid, token.accessToken, 60 * 60 * 24)
+        cacheService.set(uuid, token.accessToken, oneDayInSeconds)
 
         return "redirect:${yuqueConfig.clientRedirectUri}/?tokenId=${uuid}"
     }
