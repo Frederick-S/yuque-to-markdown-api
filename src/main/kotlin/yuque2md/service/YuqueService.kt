@@ -60,7 +60,7 @@ class YuqueService : AbstractYuqueService() {
         return objectMapper.convertValue(jsonNode.get("data"), object : TypeReference<List<Doc>>() {})
     }
 
-    fun getDocDetail(repoId: Long, docId: String, accessToken: String): DocDetail {
+    fun getDocDetail(repoId: Long, docId: Long, accessToken: String): DocDetail {
         val url = "$baseUrl/repos/$repoId/docs/$docId?raw=1"
         val request = Request.Builder()
             .url(url)

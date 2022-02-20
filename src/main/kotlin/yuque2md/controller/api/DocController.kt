@@ -1,15 +1,14 @@
 package yuque2md.controller.api
 
+import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import yuque2md.annotation.AccessToken
 import yuque2md.annotation.LoginRequired
 import yuque2md.dto.Doc
 import yuque2md.dto.DocDetail
 import yuque2md.service.YuqueService
+import java.util.concurrent.ConcurrentLinkedQueue
 
 @RestController
 class DocController : BaseApiController() {
@@ -29,7 +28,24 @@ class DocController : BaseApiController() {
 
     @LoginRequired
     @GetMapping("/repos/{repoId}/docs/{docId}")
-    fun getDocDetail(@PathVariable repoId: Long, @PathVariable docId: String, @AccessToken accessToken: String): DocDetail {
+    fun getDocDetail(@PathVariable repoId: Long, @PathVariable docId: Long, @AccessToken accessToken: String): DocDetail {
         return yuqueService.getDocDetail(repoId, docId, accessToken)
+    }
+
+    @LoginRequired
+    @PostMapping("/repos/{repoId}/docs/export")
+    fun export(@PathVariable repoId: Long, @AccessToken accessToken: String): String {
+        val docs = yuqueService.getDocs(repoId, null, null, accessToken)
+        val docDetails = ConcurrentLinkedQueue<DocDetail>()
+        val tasks = docs.map {
+            GlobalScope.launch {
+                val docDetail = yuqueService.getDocDetail(repoId, it.id, accessToken)
+                docDetails.add(docDetail)
+            }
+        }
+
+        runBlocking { tasks.joinAll() }
+
+        return ""
     }
 }
