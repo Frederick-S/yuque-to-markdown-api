@@ -35,6 +35,8 @@ class DocController : BaseApiController() {
     @LoginRequired
     @PostMapping("/repos/{repoId}/docs/export")
     fun export(@PathVariable repoId: Long, @AccessToken accessToken: String): String {
+        val repoDetail = yuqueService.getRepoDetail(repoId, accessToken)
+        val count = repoDetail.itemsCount
         val docs = yuqueService.getDocs(repoId, null, null, accessToken)
         val docDetails = ConcurrentLinkedQueue<DocDetail>()
         val tasks = docs.map {

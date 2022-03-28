@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.springframework.stereotype.Service
-import yuque2md.dto.Doc
-import yuque2md.dto.DocDetail
-import yuque2md.dto.Repo
-import yuque2md.dto.User
+import yuque2md.dto.*
 
 @Service
 class YuqueService : AbstractYuqueService() {
@@ -40,6 +37,21 @@ class YuqueService : AbstractYuqueService() {
         val jsonNode = objectMapper.readTree(json)
 
         return objectMapper.convertValue(jsonNode.get("data"), object : TypeReference<List<Repo>>() {})
+    }
+
+    fun getRepoDetail(repoId: Long, accessToken: String): RepoDetail {
+        val url = "$baseUrl/repos/${repoId}"
+        val request = Request.Builder()
+            .url(url)
+            .headers(getCommonHeaders(accessToken))
+            .build()
+        val call = OkHttpClient().newCall(request)
+        val response = call.execute()
+        val json = response.body?.string()
+        val objectMapper = ObjectMapper()
+        val jsonNode = objectMapper.readTree(json)
+
+        return objectMapper.convertValue(jsonNode.get("data"), RepoDetail::class.java)
     }
 
     /**
