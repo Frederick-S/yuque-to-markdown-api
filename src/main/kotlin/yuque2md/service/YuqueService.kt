@@ -124,11 +124,17 @@ class YuqueService : AbstractYuqueService() {
         OkHttpClient().newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-
+                    GlobalScope.launch {
+                        channel.send(DocDetail())
+                    }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     if (response.code != 200) {
+                        GlobalScope.launch {
+                            channel.send(DocDetail())
+                        }
+
                         return
                     }
 

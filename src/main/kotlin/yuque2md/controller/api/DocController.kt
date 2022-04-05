@@ -64,7 +64,10 @@ class DocController : BaseApiController() {
 
                     repeat(it.size) {
                         val docDetail = channel.receive()
-                        docDetails.add(docDetail)
+
+                        if (docDetail.id > 0) {
+                            docDetails.add(docDetail)
+                        }
                     }
 
                     semaphore.release()
