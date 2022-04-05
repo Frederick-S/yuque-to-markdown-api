@@ -2,10 +2,13 @@ package yuque2md.service
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
+import okhttp3.*
 import org.springframework.stereotype.Service
 import yuque2md.dto.*
+import java.io.IOException
 
 @Service
 class YuqueService : AbstractYuqueService() {
@@ -17,6 +20,11 @@ class YuqueService : AbstractYuqueService() {
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
+
+        if (response.code != 200) {
+            throw IOException("api request error")
+        }
+
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val jsonNode = objectMapper.readTree(json)
@@ -32,6 +40,11 @@ class YuqueService : AbstractYuqueService() {
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
+
+        if (response.code != 200) {
+            throw IOException("api request error")
+        }
+
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val jsonNode = objectMapper.readTree(json)
@@ -47,6 +60,11 @@ class YuqueService : AbstractYuqueService() {
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
+
+        if (response.code != 200) {
+            throw IOException("api request error")
+        }
+
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val jsonNode = objectMapper.readTree(json)
@@ -65,6 +83,11 @@ class YuqueService : AbstractYuqueService() {
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
+
+        if (response.code != 200) {
+            throw IOException("api request error")
+        }
+
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val jsonNode = objectMapper.readTree(json)
@@ -80,10 +103,44 @@ class YuqueService : AbstractYuqueService() {
             .build()
         val call = OkHttpClient().newCall(request)
         val response = call.execute()
+
+        if (response.code != 200) {
+            throw IOException("api request error")
+        }
+
         val json = response.body?.string()
         val objectMapper = ObjectMapper()
         val jsonNode = objectMapper.readTree(json)
 
         return objectMapper.convertValue(jsonNode.get("data"), DocDetail::class.java)
+    }
+
+    fun getDocDetailAsync(repoId: Long, docId: Long, accessToken: String, channel: Channel<DocDetail>) {
+        val url = "$baseUrl/repos/$repoId/docs/$docId?raw=1"
+        val request = Request.Builder()
+            .url(url)
+            .headers(getCommonHeaders(accessToken))
+            .build()
+        OkHttpClient().newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.code != 200) {
+                        return
+                    }
+
+                    val json = response.body?.string()
+                    val objectMapper = ObjectMapper()
+                    val jsonNode = objectMapper.readTree(json)
+                    val docDetail = objectMapper.convertValue(jsonNode.get("data"), DocDetail::class.java)
+
+                    GlobalScope.launch {
+                        channel.send(docDetail)
+                    }
+                }
+            })
     }
 }
