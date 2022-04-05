@@ -1,6 +1,12 @@
 package yuque2md.controller.api
 
-import kotlinx.coroutines.*
+import com.google.common.collect.Lists
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import yuque2md.annotation.AccessToken
@@ -28,7 +34,11 @@ class DocController : BaseApiController() {
 
     @LoginRequired
     @GetMapping("/repos/{repoId}/docs/{docId}")
-    fun getDocDetail(@PathVariable repoId: Long, @PathVariable docId: Long, @AccessToken accessToken: String): DocDetail {
+    fun getDocDetail(
+        @PathVariable repoId: Long,
+        @PathVariable docId: Long,
+        @AccessToken accessToken: String
+    ): DocDetail {
         return yuqueService.getDocDetail(repoId, docId, accessToken)
     }
 
@@ -37,16 +47,33 @@ class DocController : BaseApiController() {
     fun export(@PathVariable repoId: Long, @AccessToken accessToken: String): String {
         val repoDetail = yuqueService.getRepoDetail(repoId, accessToken)
         val count = repoDetail.itemsCount
+        val threshold = 50
         val docs = yuqueService.getDocs(repoId, null, null, accessToken)
         val docDetails = ConcurrentLinkedQueue<DocDetail>()
-        val tasks = docs.map {
-            GlobalScope.launch {
-                val docDetail = yuqueService.getDocDetail(repoId, it.id, accessToken)
-                docDetails.add(docDetail)
-            }
-        }
+        val semaphore = Semaphore(1)
+        val channel = Channel<DocDetail>()
 
-        runBlocking { tasks.joinAll() }
+        val tasks = Lists.partition(docs, threshold)
+            .map {
+                GlobalScope.launch {
+                    semaphore.acquire()
+
+                    it.forEach {
+                        yuqueService.getDocDetailAsync(repoId, it.id, accessToken, channel)
+                    }
+
+                    repeat(it.size) {
+                        val docDetail = channel.receive()
+                        docDetails.add(docDetail)
+                    }
+
+                    semaphore.release()
+                }
+            }
+
+        runBlocking {
+            tasks.joinAll()
+        }
 
         return ""
     }
