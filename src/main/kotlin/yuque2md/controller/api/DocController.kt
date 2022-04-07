@@ -15,6 +15,7 @@ import yuque2md.dto.Doc
 import yuque2md.dto.DocDetail
 import yuque2md.service.YuqueService
 import java.util.concurrent.ConcurrentLinkedQueue
+import kotlin.math.ceil
 
 @RestController
 class DocController : BaseApiController() {
@@ -47,13 +48,18 @@ class DocController : BaseApiController() {
     fun export(@PathVariable repoId: Long, @AccessToken accessToken: String): String {
         val repoDetail = yuqueService.getRepoDetail(repoId, accessToken)
         val count = repoDetail.itemsCount
-        val threshold = 50
-        val docs = yuqueService.getDocs(repoId, null, null, accessToken)
+        val limit = 500
+        val docs = IntRange(0, ceil(count / limit.toFloat()).toInt())
+            .map {
+                yuqueService.getDocs(repoId, it * limit, limit, accessToken)
+            }
+            .flatten()
         val docDetails = ConcurrentLinkedQueue<DocDetail>()
         val semaphore = Semaphore(1)
         val channel = Channel<DocDetail>()
+        val concurrentRequests = 50
 
-        val tasks = Lists.partition(docs, threshold)
+        val tasks = Lists.partition(docs, concurrentRequests)
             .map {
                 GlobalScope.launch {
                     semaphore.acquire()
