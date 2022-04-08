@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.util.StreamUtils
 import org.springframework.web.bind.annotation.*
 import yuque2md.annotation.AccessToken
 import yuque2md.annotation.LoginRequired
@@ -15,6 +16,9 @@ import yuque2md.dto.Doc
 import yuque2md.dto.DocDetail
 import yuque2md.service.YuqueService
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+import javax.servlet.http.HttpServletResponse
 import kotlin.math.ceil
 
 @RestController
@@ -45,7 +49,11 @@ class DocController : BaseApiController() {
 
     @LoginRequired
     @PostMapping("/repos/{repoId}/docs/export")
-    fun export(@PathVariable repoId: Long, @AccessToken accessToken: String): String {
+    fun export(
+        @PathVariable repoId: Long,
+        @AccessToken accessToken: String,
+        httpServletResponse: HttpServletResponse
+    ) {
         val repoDetail = yuqueService.getRepoDetail(repoId, accessToken)
         val count = repoDetail.itemsCount
         val limit = 500
@@ -84,6 +92,19 @@ class DocController : BaseApiController() {
             tasks.joinAll()
         }
 
-        return ""
+        httpServletResponse.contentType = "application/octet-stream"
+        httpServletResponse.setHeader("Content-Disposition", "attachment;filename=download.zip")
+
+        ZipOutputStream(httpServletResponse.outputStream).use { zipOutputStream ->
+            docDetails.forEach {
+                val zipEntry = ZipEntry("${it.title}.md")
+                zipOutputStream.putNextEntry(zipEntry)
+
+                StreamUtils.copy(it.body.toByteArray(Charsets.UTF_8), zipOutputStream)
+                zipOutputStream.closeEntry()
+            }
+
+            zipOutputStream.finish()
+        }
     }
 }
