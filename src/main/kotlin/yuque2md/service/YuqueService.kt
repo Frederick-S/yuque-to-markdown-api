@@ -121,6 +121,7 @@ class YuqueService : AbstractYuqueService() {
             .url(url)
             .headers(getCommonHeaders(accessToken))
             .build()
+
         OkHttpClient().newCall(request)
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
