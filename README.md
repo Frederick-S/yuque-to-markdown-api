@@ -12,6 +12,9 @@ Export yuque repository to markdown files.
     5. `REDIS_HOST`: the host of your redis server
     6. `REDIS_PORT`: the port of your redis server
 
+## Known issues
+1. Due to the [rate limit](https://www.yuque.com/yuque/developer/api#5b3a1535) of yuque, it's highly possible that you'll receive `429 Too Many Requests` if you have a lot of docs
+2. I found the doc content returned by the api might be corrupted, especially the code block which doesn't wrap the whole code
 
 ## License
 [MIT](LICENSE)
