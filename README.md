@@ -16,7 +16,7 @@ Although it's not so useful to host it as a web app (see known issues), it could
 
 ## Known issues
 1. Due to the [rate limit](https://www.yuque.com/yuque/developer/api#5b3a1535) of yuque, it's highly possible that you'll receive `429 Too Many Requests` if you have a lot of docs to export. The doc only mentions the rate limit is 5000/hour, but it doesn't say how many requests can be sent per second
-2. I found the doc content returned by the api might be not well formatted, especially the code block which doesn't wrap the whole code
+2. The doc content returned by the api might be not well formatted, especially the code block which doesn't wrap the whole code
 
 ## License
 [MIT](LICENSE)
