@@ -1,7 +1,7 @@
 # yuque-to-markdown-api [![Build](https://github.com/Frederick-S/yuque-to-markdown/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Frederick-S/yuque-to-markdown/actions/workflows/build.yml)
 Export yuque repository to markdown files. 
 
-Although it's not so useful to host it as a web app (due to the rate limit of yuque and it might be slow if you have a lot of docs), it could be an example of how to interact with yuque api.
+Although it's not so useful to host it as a web app (see known issues), it could be an example of how to interact with yuque api.
 
 ## Getting started
 1. Follow the [instructions](https://www.yuque.com/yuque/developer/create-oauth-apps) to create an oauth app, the callback url is `http://localhost:8080/oauth2/authorized`
