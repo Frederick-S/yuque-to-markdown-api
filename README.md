@@ -6,7 +6,7 @@ Although it's not so useful to host it as a web app (see known issues), it could
 ## Getting started
 1. Follow the [instructions](https://www.yuque.com/yuque/developer/create-oauth-apps) to create an oauth app, the callback url is `http://localhost:8080/oauth2/authorized`
 2. A redis server
-3. Run `mvn package` to package the app, then run `java -jar target/yuque2md-0.0.1-SNAPSHOT.jar` with the following environment variables:
+3. Run `mvn package` to package the app, then run `java -jar target/yuque2md-0.0.1-SNAPSHOT.jar` with the following environment variables exported:
     1. `YUQUE_CLIENT_ID`: the client id of your oauth app
     2. `YUQUE_CLIENT_SECRET`: the client secret of your oauth app
     3. `YUQUE_REDIRECT_URI`: http://localhost:8080/oauth2/authorized, this url will be called by yuque when the user is successfully authorized
